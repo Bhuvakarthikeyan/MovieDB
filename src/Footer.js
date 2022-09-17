@@ -5,7 +5,7 @@ class Footer extends React.Component {
     return (
       <div className="App-footer">
         <p className="copyright-label">
-          © 2018 MovieDB Search. All Rights Reseved.
+          © 2022 MovieDB Search. All Rights Reseved.
         </p>
       </div>
     );
