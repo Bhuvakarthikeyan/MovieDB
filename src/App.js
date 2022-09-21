@@ -8,7 +8,7 @@ const App = () => {
   let performSearch;
   performSearch = function (searchTerm) {
     const url =
-      "https://api.themoviedb.org/3/search/movie?&api_key=b6b3aaa39e9b8519d35c42addbdba973&query=" +
+      "https://api.themoviedb.org/3/movie/550?api_key=39dfce269c5270845b524a47e79b1a31=" +
       searchTerm;
     fetch(url)
       .then((data) => {
