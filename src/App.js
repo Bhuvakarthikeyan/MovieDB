@@ -25,8 +25,8 @@ const App = () => {
             "https://image.tmdb.org/t/p/w200" + movie.poster_path;
           const movieRow = <MovieRow movie={movie} key={movie.id} />;
           movieRows.push(movieRow);
-          setSearch({ rows: movieRows });
         });
+        setSearch({ rows: movieRows });
       })
       .catch((err) => {
         console.error("Failed to fetch data");
