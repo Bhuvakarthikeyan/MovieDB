@@ -16,7 +16,7 @@ const MovieRow = (props) => {
         <input
           type="button"
           className="view-btn"
-          onClick={viewMovie.bind(this)}
+          onClick={viewMovie}
           value="View"
           aria-label="viewbutton"
         />

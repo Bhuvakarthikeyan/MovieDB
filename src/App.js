@@ -4,7 +4,7 @@ import MovieRow from "./MovieRow.js";
 import Footer from "./Footer.js";
 
 const App = () => {
-  const [search, setSearch] = useState({});
+  const [movieList, setMovieList] = useState();
 
   const performSearch = (searchTerm) => {
     const url =
@@ -16,17 +16,13 @@ const App = () => {
         return data.json();
       })
       .then((searchResults) => {
-        const results = searchResults.results;
-
         var movieRows = [];
-
-        results.forEach((movie) => {
+        searchResults.results.forEach((movie) => {
           movie.poster_src =
             "https://image.tmdb.org/t/p/w200" + movie.poster_path;
-          const movieRow = <MovieRow movie={movie} key={movie.id} />;
-          movieRows.push(movieRow);
+          movieRows.push(<MovieRow movie={movie} key={movie.id} />);
         });
-        setSearch({ rows: movieRows });
+        setMovieList(movieRows);
       })
       .catch((err) => {
         console.error("Failed to fetch data");
@@ -34,6 +30,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    /* replace the argument with default search term */
     performSearch("term");
   }, []);
 
@@ -67,8 +64,7 @@ const App = () => {
         placeholder="Enter Search"
         aria-label="searchbutton"
       />
-
-      {search.rows}
+      {movieList}
       <Footer />
     </div>
   );
