@@ -4,43 +4,38 @@ import MovieRow from "./MovieRow.js";
 import Footer from "./Footer.js";
 
 const App = () => {
-  const [search, setSearch] = useState({});
-  let performSearch;
-  useEffect(
-    (performSearch = function (searchTerm) {
-      const url =
-        "https://api.themoviedb.org/3/search/movie?&api_key=b6b3aaa39e9b8519d35c42addbdba973&query=" +
-        searchTerm;
-      fetch(url)
-        .then((data) => {
-          console.log("fetched data successfully");
-          return data.json();
-        })
-        .then((searchResults) => {
-          const results = searchResults.results;
+  const [movieList, setMovieList] = useState();
 
-          var movieRows = [];
-
-          results.forEach((movie) => {
-            movie.poster_src =
-              "https://image.tmdb.org/t/p/w200" + movie.poster_path;
-            const movieRow = <MovieRow movie={movie} key={movie.id} />;
-            movieRows.push(movieRow);
-          });
-          setSearch({ rows: movieRows });
-        })
-        .catch((err) => {
-          console.error("Failed to fetch data");
+  const performSearch = (searchTerm) => {
+    const url =
+      "https://api.themoviedb.org/3/search/movie?&api_key=b6b3aaa39e9b8519d35c42addbdba973&query=" +
+      searchTerm;
+    fetch(url)
+      .then((data) => {
+        console.log("fetched data successfully");
+        return data.json();
+      })
+      .then((searchResults) => {
+        var movieRows = [];
+        searchResults.results.forEach((movie) => {
+          movie.poster_src =
+            "https://image.tmdb.org/t/p/w200" + movie.poster_path;
+          movieRows.push(<MovieRow movie={movie} key={movie.id} />);
         });
-    }),
-    []
-  );
+        setMovieList(movieRows);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch data");
+      });
+  };
+
+  useEffect(() => {
+    /* replace the argument with default search term */
+    performSearch("term");
+  }, []);
 
   const searchChangeHandler = function (event) {
-    const boundObject = this;
-    console.log(boundObject);
-    const searchTerm = event.target.value;
-    performSearch(searchTerm);
+    performSearch(event.target.value);
   };
 
   return (
@@ -65,12 +60,11 @@ const App = () => {
 
       <input
         className="search-box"
-        onChange={searchChangeHandler.bind(this)}
+        onChange={searchChangeHandler}
         placeholder="Enter Search"
         aria-label="searchbutton"
       />
-
-      {search.rows}
+      {movieList}
       <Footer />
     </div>
   );
