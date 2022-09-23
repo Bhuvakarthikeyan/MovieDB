@@ -53,7 +53,6 @@ const App = () => {
             </td>
             <td>
               <h2 id="brand-name">MovieDB Search</h2>
-              <h2>option</h2>
             </td>
           </tr>
         </tbody>
